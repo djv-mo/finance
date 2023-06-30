@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import SavingGoal
+
+
+@admin.register(SavingGoal)
+class SavingGoalsAdmin(admin.ModelAdmin):
+    readonly_fields = ["monthly_deposit",]
