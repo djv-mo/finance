@@ -160,3 +160,4 @@ staticfiles
 media
 
 tmp
+.nuxt

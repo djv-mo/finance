@@ -16,11 +16,13 @@ class SavingGoal(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_('Total amount'))
     date = models.DateField(verbose_name=_('Date to reach goal'))
     monthly_deposit = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_('Monthly deposite'))
+    created_at = models.DateTimeField(auto_now_add=True)
     objects = SavingGoalManager()
     
     class Meta:
         verbose_name = "Saving Goal"
         verbose_name_plural = "Saving Goals"
+        ordering = ('-created_at',)
 
     def __str__(self):
         return f"{self.user.username}'s Saving Goal: {self.amount}"
@@ -33,6 +35,8 @@ class SavingGoal(models.Model):
         # Calculate the monthly deposit based on the total amount and goal date
         current_date = timezone.localdate()
         months_remaining = (self.date.year - current_date.year) * 12 + (self.date.month - current_date.month)
+        if months_remaining == 0:
+            months_remaining = 1
         return self.amount / months_remaining
 
 
